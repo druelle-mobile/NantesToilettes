@@ -1,0 +1,120 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    def MAJOR_VERSION = 1
+    def MINOR_VERSION = 0
+    def PATCH_VERSION = 0
+
+    compileSdkVersion COMPILE_SDK_VERSION
+    defaultConfig {
+        applicationId "ovh.geoffrey_druelle.nantestoilettes"
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode Integer.parseInt(new Date().format('yyMMddHHmm'))
+        versionName "${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "Nantoilettes"
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "Nantoilettes DEV"
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$KOTLIN_VERSION"
+    implementation "androidx.appcompat:appcompat:$APP_COMPAT"
+    implementation "androidx.core:core-ktx:$CORE_KTX"
+    implementation "androidx.constraintlayout:constraintlayout:$CONSTRAINT_LAYOUT"
+    implementation "androidx.legacy:legacy-support-v4:$LEGACY_SUPPORT"
+    implementation "androidx.preference:preference:$PREFERENCE"
+    implementation "com.google.android.material:material:$MATERIAL_VERSION"
+
+    // Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$KOTLIN_COROUTINES"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$KOTLIN_COROUTINES"
+
+    // Android Architecture Components
+    // Navigation
+    implementation "android.arch.navigation:navigation-fragment-ktx:$NAVIGATION_VERSION"
+    implementation "android.arch.navigation:navigation-ui-ktx:$NAVIGATION_VERSION"
+    // Room
+    implementation "androidx.room:room-runtime:$ROOM_VERSION"
+    kapt "androidx.room:room-compiler:$ROOM_VERSION"
+    implementation "androidx.room:room-ktx:$ROOM_VERSION"
+    implementation "androidx.room:room-rxjava2:$ROOM_VERSION"
+    // LiveData & ViewModel
+    implementation "androidx.lifecycle:lifecycle-extensions:$LIFECYCLE_VERSION"
+
+    // Anko
+    implementation "org.jetbrains.anko:anko:$ANKO_VERSION"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+//    implementation "com.squareup.retrofit2:converter-moshi:$RETROFIT_VERSION"
+
+    // GSON
+    implementation "com.google.code.gson:gson:$GSON_VERSION"
+
+    // Koin
+    implementation "org.koin:koin-core:$KOIN_VERSION"
+    implementation "org.koin:koin-android:$KOIN_VERSION"
+    implementation "org.koin:koin-androidx-viewmodel:$KOIN_VERSION"
+
+    // RxJava2
+    implementation "io.reactivex.rxjava2:rxjava:$RXJAVA2_VERSION"
+    implementation "io.reactivex.rxjava2:rxandroid:$RXANDROID_VERSION"
+
+    // Stetho
+    implementation "com.facebook.stetho:stetho:$STETHO_VERSION"
+
+    // Picasso
+    implementation "com.squareup.picasso:picasso:$PICASSO_VERSION"
+
+    // Lottie
+    implementation "com.airbnb.android:lottie:$LOTTIE_VERSION"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$TIMBER_VERSION"
+
+    // Mapbox
+    implementation "com.mapbox.mapboxsdk:mapbox-android-sdk:$MAPBOX_SDK"
+
+    // EasyPermissions
+    implementation "pub.devrel:easypermissions:$EASY_PERMISSIONS"
+
+    // SDP and SSP
+    implementation "com.intuit.sdp:sdp-android:$SDP_VERSION"
+    implementation "com.intuit.ssp:ssp-android:$SSP_VERSION"
+
+    // Tests
+    testImplementation "junit:junit:$JUNIT_VERSION"
+    androidTestImplementation "androidx.test.ext:junit:$ANDROID_JUNIT"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_CORE"
+}

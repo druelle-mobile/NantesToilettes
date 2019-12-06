@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="ovh.geoffrey_druelle.nantestoilettes.ui.splashscreen.SplashScreenViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.splashscreen.SplashScreenFragment">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/poo_loader"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/textview_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{String.format(@string/version,vm.version)}'
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="Version 1.0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

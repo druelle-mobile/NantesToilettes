@@ -1,0 +1,12 @@
+<resources>
+
+    <!--  Permissions  -->
+    <string name="rationale_location">This app need access to your location to propose the best experience.</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="returned_from_settings">Returned from settings to Nant\\\'oilettes with the following permissions : \\nLocation: %s</string>
+
+    <!--  SplashScreen  -->
+    <string name="version">Version %s</string>
+
+</resources>

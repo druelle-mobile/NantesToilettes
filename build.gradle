@@ -39,6 +39,10 @@ buildscript {
         JUNIT_VERSION = '4.12'
         ANDROID_JUNIT = '1.1.1'
         ESPRESSO_CORE = '3.2.0'
+
+        SONAR_PLUGIN = '2.7'
+        SONAR_LOCALHOST = 'http://localhost:9000/'
+        SONAR_LOGIN = '3cec9f9050bae50265733e327d6855c544123e40'
     }
     repositories {
         google()
@@ -48,8 +52,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$GRADLE_VERSION"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$SONAR_PLUGIN"
     }
 }
 

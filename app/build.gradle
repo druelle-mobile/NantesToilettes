@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     def MAJOR_VERSION = 1
     def MINOR_VERSION = 0
@@ -18,6 +22,8 @@ android {
         versionName "${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+
+        buildConfigField("String", "MAPBOX_API_KEY", apikeyProperties["MAPBOX_API_KEY"])
     }
     buildTypes {
         release {
@@ -64,6 +70,9 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui-ktx:$NAVIGATION_VERSION"
     // Room
     implementation "androidx.room:room-runtime:$ROOM_VERSION"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     kapt "androidx.room:room-compiler:$ROOM_VERSION"
     implementation "androidx.room:room-ktx:$ROOM_VERSION"
     implementation "androidx.room:room-rxjava2:$ROOM_VERSION"
@@ -104,6 +113,7 @@ dependencies {
 
     // Mapbox
     implementation "com.mapbox.mapboxsdk:mapbox-android-sdk:$MAPBOX_SDK"
+    implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-markerview-v8:$MAPBOX_MARKERVIEW"
 
     // EasyPermissions
     implementation "pub.devrel:easypermissions:$EASY_PERMISSIONS"
@@ -116,4 +126,5 @@ dependencies {
     testImplementation "junit:junit:$JUNIT_VERSION"
     androidTestImplementation "androidx.test.ext:junit:$ANDROID_JUNIT"
     androidTestImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_CORE"
+    implementation 'androidx.paging:paging-runtime-ktx:2.1.0'
 }

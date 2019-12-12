@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ovh.geoffrey_druelle.nantestoilettes.R
 import ovh.geoffrey_druelle.nantestoilettes.core.BaseFragment
@@ -34,6 +35,7 @@ class SplashScreenFragment : BaseFragment<SplashScreenFragmentBinding>() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         MainActivity.instance.supportActionBar?.hide()
+        MainActivity.instance.bottom_nav.visibility = View.GONE
 
         viewModel = getViewModel()
         binding.vm = viewModel
@@ -105,6 +107,7 @@ class SplashScreenFragment : BaseFragment<SplashScreenFragmentBinding>() {
     }
 
     private fun navigateToMap() {
+//        val action = R.id.action_splashScreenFragment_to_mapFragment
         val action = R.id.action_splashScreenFragment_to_mapFragment
         viewModel.navigatedToMap()
         viewModel.alreadyFinishedAnimation()

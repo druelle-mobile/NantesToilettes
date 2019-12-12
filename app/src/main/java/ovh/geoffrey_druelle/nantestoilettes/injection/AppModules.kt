@@ -1,6 +1,5 @@
 package ovh.geoffrey_druelle.nantestoilettes.injection
 
-import androidx.room.RoomDatabase
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -8,9 +7,9 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
-import ovh.geoffrey_druelle.nantestoilettes.NantesToilettesApp
 import ovh.geoffrey_druelle.nantestoilettes.data.local.database.AppDatabase
 import ovh.geoffrey_druelle.nantestoilettes.data.remote.api.OpenDataNantesApi
+import ovh.geoffrey_druelle.nantestoilettes.ui.about.AboutViewModel
 import ovh.geoffrey_druelle.nantestoilettes.ui.favorites.FavoritesViewModel
 import ovh.geoffrey_druelle.nantestoilettes.ui.map.MapViewModel
 import ovh.geoffrey_druelle.nantestoilettes.ui.splashscreen.SplashScreenViewModel
@@ -40,17 +39,12 @@ val appModules = module {
     viewModel { MapViewModel() }
     viewModel { ToiletsListViewModel() }
     viewModel { FavoritesViewModel() }
+    viewModel { AboutViewModel() }
 }
 
 fun getModules(): List<Module>{
     return listOf(appModules)
 }
-
-// Database provider
-fun provideDatabase(): RoomDatabase {
-    return AppDatabase.getInstance(NantesToilettesApp.appContext)
-}
-
 
 // Networks providers
 fun provideOkHttpClient(cache: Cache): OkHttpClient {

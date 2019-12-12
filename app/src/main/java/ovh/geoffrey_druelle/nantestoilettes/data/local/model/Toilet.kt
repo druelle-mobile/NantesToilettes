@@ -19,7 +19,8 @@ data class Toilet(
     var city: String,
     var reduceMobility: String?,
     var latitude: Double,
-    var longitude: Double
+    var longitude: Double,
+    var favorite: Boolean
 ) {
 
     @Ignore
@@ -34,6 +35,7 @@ data class Toilet(
         city = "",
         reduceMobility = "",
         latitude = 0.0,
-        longitude = 0.0
+        longitude = 0.0,
+        favorite = false
     )
 }

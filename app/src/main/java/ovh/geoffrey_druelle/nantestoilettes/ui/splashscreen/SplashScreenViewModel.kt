@@ -50,6 +50,7 @@ class SplashScreenViewModel(
     private val _failedRequestForHits = MutableLiveData<Boolean>()
     val failedRequestForHits: LiveData<Boolean>
         get() = _failedRequestForHits
+
     private var repo: ToiletRepository = ToiletRepository(instance)
 
     var version: String = instance.getVersionNumber()

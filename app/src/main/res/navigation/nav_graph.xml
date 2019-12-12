@@ -18,19 +18,116 @@
             app:popUpTo="@+id/splashScreenFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+
     <fragment
         android:id="@+id/mapFragment"
         android:name="ovh.geoffrey_druelle.nantestoilettes.ui.map.MapFragment"
         android:label="map_fragment"
-        tools:layout="@layout/map_fragment" />
+        tools:layout="@layout/map_fragment" >
+        <action
+            android:id="@+id/action_mapFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mapFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mapFragment_to_toiletsListFragment"
+            app:destination="@id/toiletsListFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
     <fragment
         android:id="@+id/toiletsListFragment"
         android:name="ovh.geoffrey_druelle.nantestoilettes.ui.toiletslist.ToiletsListFragment"
         android:label="toilets_list_fragment"
-        tools:layout="@layout/toilets_list_fragment" />
+        tools:layout="@layout/toilets_list_fragment" >
+        <action
+            android:id="@+id/action_toiletsListFragment_to_mapFragment"
+            app:destination="@id/mapFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_toiletsListFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_toiletsListFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="ovh.geoffrey_druelle.nantestoilettes.ui.favorites.FavoritesFragment"
         android:label="favorites_fragment"
-        tools:layout="@layout/favorites_fragment" />
+        tools:layout="@layout/favorites_fragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_mapFragment"
+            app:destination="@id/mapFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_toiletsListFragment"
+            app:destination="@id/toiletsListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="ovh.geoffrey_druelle.nantestoilettes.ui.about.AboutFragment"
+        android:label="AboutFragment"
+        tools:layout="@layout/about_fragment">
+        <action
+            android:id="@+id/action_aboutFragment_to_mapFragment"
+            app:destination="@id/mapFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_aboutFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_aboutFragment_to_toiletsListFragment"
+            app:destination="@id/toiletsListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
 </navigation>

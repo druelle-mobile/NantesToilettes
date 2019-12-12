@@ -9,4 +9,18 @@
     <!--  SplashScreen  -->
     <string name="version">Version %s</string>
 
+    <!--  Toilet item list  -->
+    <string name="item_name">Name : %s</string>
+    <string name="item_address">Address : %s</string>
+    <string name="item_city">City : %s</string>
+    <string name="item_schedule">Schedule : %s</string>
+    <string name="item_pole">Pole : %s</string>
+    <string name="item_type">Type : %s</string>
+
+    <!--  About  -->
+    <string name="property">Database : %s \nOwner and Creator : %s \nLast update : %s \nLast treatment : %s \nLicence : %s</string>
+    <string name="about_app">This application is not a lucrative one, developed firstly for fun. \nThe main goal is to provide a list of public toilets, in the metropolis of Nantes, France. \nDatas from \'Nantes Méropole\', and available on \'Open Data Nantes Métropole\' website.</string>
+    <string name="made_by">Application made by %s</string>
+    <string name="see_website">See website</string>
+
 </resources>

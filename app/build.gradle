@@ -112,6 +112,7 @@ dependencies {
 
     // Mapbox
     implementation "com.mapbox.mapboxsdk:mapbox-android-sdk:$MAPBOX_SDK"
+    implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v8:$MAPBOX_ANNOTATION"
     implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-markerview-v8:$MAPBOX_MARKERVIEW"
 
     // EasyPermissions
@@ -125,7 +126,6 @@ dependencies {
     testImplementation "junit:junit:$JUNIT_VERSION"
     androidTestImplementation "androidx.test.ext:junit:$ANDROID_JUNIT"
     androidTestImplementation "androidx.test.espresso:espresso-core:$ESPRESSO_CORE"
-    implementation 'androidx.paging:paging-runtime-ktx:2.1.0'
 }
 
 // launch sonar : sonar-scanner.bat -D"sonar.projectKey=ovh.geoffrey_druelle.nantestoilettes" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.login=3cec9f9050bae50265733e327d6855c544123e40"

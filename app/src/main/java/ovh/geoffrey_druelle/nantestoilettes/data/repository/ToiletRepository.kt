@@ -34,14 +34,8 @@ class ToiletRepository(app: Application) : CoroutineScope{
         }
     }
 
-    suspend fun getToiletsList(): List<Toilet>? {
-        return withContext(Dispatchers.IO){
-            toiletDao.getToiletsList().value
-        }
-    }
-
-    fun getToiletsList2() : Single<List<Toilet>> {
-        return toiletDao.getToiletsList2()
+    fun getToiletsList() : Single<List<Toilet>> {
+        return toiletDao.getToiletsList()
     }
 
     fun getFavoritesList() : Single<List<Toilet>> {

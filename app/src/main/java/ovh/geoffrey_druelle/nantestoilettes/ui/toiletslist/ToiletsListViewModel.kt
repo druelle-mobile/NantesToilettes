@@ -2,14 +2,12 @@ package ovh.geoffrey_druelle.nantestoilettes.ui.toiletslist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.runBlocking
 import ovh.geoffrey_druelle.nantestoilettes.NantesToilettesApp.Companion.instance
 import ovh.geoffrey_druelle.nantestoilettes.core.BaseViewModel
 import ovh.geoffrey_druelle.nantestoilettes.data.local.model.Toilet
@@ -50,7 +48,7 @@ class ToiletsListViewModel : BaseViewModel(), CoroutineScope {
     }
 
     private fun loadToiletsList() {
-        subscription = repo.getToiletsList2()
+        subscription = repo.getToiletsList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

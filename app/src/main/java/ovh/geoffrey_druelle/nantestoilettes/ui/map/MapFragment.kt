@@ -1,5 +1,8 @@
 package ovh.geoffrey_druelle.nantestoilettes.ui.map
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -7,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions
@@ -17,16 +20,17 @@ import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
-import com.mapbox.mapboxsdk.plugins.markerview.MarkerView
+import com.mapbox.mapboxsdk.plugins.annotation.Symbol
+import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager
+import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions
 import com.mapbox.mapboxsdk.plugins.markerview.MarkerViewManager
+import com.mapbox.mapboxsdk.utils.BitmapUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import ovh.geoffrey_druelle.nantestoilettes.NantesToilettesApp
 import ovh.geoffrey_druelle.nantestoilettes.R
 import ovh.geoffrey_druelle.nantestoilettes.core.BaseFragment
 import ovh.geoffrey_druelle.nantestoilettes.databinding.MapFragmentBinding
-import ovh.geoffrey_druelle.nantestoilettes.ui.MainActivity
 import ovh.geoffrey_druelle.nantestoilettes.ui.MainActivity.Companion.instance
 
 class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback {
@@ -40,6 +44,10 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var mapboxMap: MapboxMap
     private lateinit var markerViewManager: MarkerViewManager
+    private lateinit var symbolManager: SymbolManager
+
+    private lateinit var drawable: Drawable
+    private lateinit var bitmap: Bitmap
 
     @LayoutRes
     override fun getLayoutResId(): Int = R.layout.map_fragment
@@ -61,6 +69,9 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback {
 
         val root = binding.root
 
+        drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_location_on_red_600_24dp, null)!!
+        bitmap = BitmapUtils.getBitmapFromDrawable(drawable)!!
+
         initObservers()
         initMapView(root, savedInstanceState)
 
@@ -80,13 +91,12 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback {
         else {
             toast("Press Back again to exit.")
             exit = true
-            Handler().postDelayed({exit = false}, 3000)
+            Handler().postDelayed({ exit = false }, 3000)
         }
     }
 
     private fun initObservers() {
-        viewModel.getToiletsGeoCoords()
-        viewModel.toiletsList.observe(this, Observer {  })
+        viewModel.toiletsList.observe(this, Observer { })
     }
 
     private fun initMapView(
@@ -101,36 +111,38 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback {
     override fun onMapReady(mapboxMap: MapboxMap) {
         this@MapFragment.mapboxMap = mapboxMap
         mapboxMap.setStyle(Style.MAPBOX_STREETS) { style ->
-            addMarkers()
+            bitmap.let { style.addImage("MARK", it) }
+            addMarkers(style)
             enableLocationComponent(style)
         }
-
     }
 
-    private fun addMarkers() {
-        markerViewManager = MarkerViewManager(mapView, mapboxMap)
+    private fun addMarkers(style: Style) {
         val list = viewModel.toiletsList.value
 
+        symbolManager = SymbolManager(mapView, mapboxMap, style)
+        symbolManager.iconAllowOverlap = true
+        symbolManager.textAllowOverlap = false
+
         if (list != null) {
-            for (i in list.indices){
-                val markerView = MarkerView(LatLng(list[i].latitude, list[i].longitude),mapView)
-                markerViewManager.addMarker(markerView)
+            for (i in list.indices) {
+                symbolManager.create(SymbolOptions()
+                    .withLatLng(LatLng(list[i].latitude, list[i].longitude))
+                    .withIconImage("MARK"))
             }
         }
+
+        symbolManager.addClickListener { symbol -> toast("clicked  " + symbol.textField.toLowerCase()) };
     }
 
 
-    private fun enableLocationComponent(style: Style) { // Check if permissions are enabled and if not request
+    private fun enableLocationComponent(style: Style) {
         val locationComponent = mapboxMap.locationComponent
-        // Activate with options
         locationComponent.activateLocationComponent(
             LocationComponentActivationOptions.builder(instance, style).build()
         )
-        // Enable to make component visible
         locationComponent.isLocationComponentEnabled = true
-        // Set the component's camera mode
         locationComponent.cameraMode = CameraMode.NONE
-        // Set the component's render mode
         locationComponent.renderMode = RenderMode.COMPASS
     }
 

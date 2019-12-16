@@ -10,11 +10,9 @@ import ovh.geoffrey_druelle.nantestoilettes.data.local.model.Toilet
 @Dao
 interface ToiletDao : BaseDao<Toilet> {
 
-    @Query("SELECT * FROM Toilet")
-    fun getToiletsList() : LiveData<List<Toilet>>
 
     @Query("SELECT * FROM Toilet")
-    fun getToiletsList2() : Single<List<Toilet>>
+    fun getToiletsList() : Single<List<Toilet>>
 
     @Query("SELECT * FROM Toilet WHERE favorite = 1")
     fun getFavoritesList() : Single<List<Toilet>>

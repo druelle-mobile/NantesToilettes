@@ -44,6 +44,10 @@ class ToiletRepository(app: Application) : CoroutineScope{
         return toiletDao.getToiletsList2()
     }
 
+    fun getFavoritesList() : Single<List<Toilet>> {
+        return toiletDao.getFavoritesList()
+    }
+
     suspend fun isToiletInFavorites(id: Int) : Boolean {
         val value = withContext(Dispatchers.IO){
             toiletDao.isToiletInFavorites(id)

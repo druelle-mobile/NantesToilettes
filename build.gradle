@@ -20,7 +20,7 @@ buildscript {
         ROOM_VERSION = '2.2.2'
         LIFECYCLE_VERSION = '2.1.0'
 
-        ANKO_VERSION='0.10.8'
+        ANKO_VERSION = '0.10.8'
         RETROFIT_VERSION = '2.6.2'
         GSON_VERSION = '2.8.5'
         KOIN_VERSION = '2.0.1'

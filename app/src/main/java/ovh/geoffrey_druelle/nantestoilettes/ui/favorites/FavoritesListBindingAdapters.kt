@@ -1,22 +1,22 @@
-package ovh.geoffrey_druelle.nantestoilettes.ui.toiletslist
+package ovh.geoffrey_druelle.nantestoilettes.ui.favorites
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ovh.geoffrey_druelle.nantestoilettes.data.local.model.Toilet
 
-@BindingAdapter(value = ["toiletsList","toiletsViewModel"], requireAll = false)
+@BindingAdapter(value = ["favoritesList","favoritesViewModel"], requireAll = false)
 fun setRecyclerViewSource(
     recyclerView: RecyclerView,
     list: List<Toilet>,
-    viewModel: ToiletsListViewModel
+    viewModel: FavoritesViewModel
 ) {
     recyclerView.adapter?.run {
-        if (this is ToiletsListAdapter) {
+        if (this is FavoritesListAdapter) {
             this.toilets = list
             this.notifyDataSetChanged()
         }
     } ?: run {
-        ToiletsListAdapter(list, viewModel).apply {
+        FavoritesListAdapter(list, viewModel).apply {
             recyclerView.adapter = this
         }
     }

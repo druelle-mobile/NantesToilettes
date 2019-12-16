@@ -16,6 +16,9 @@ interface ToiletDao : BaseDao<Toilet> {
     @Query("SELECT * FROM Toilet")
     fun getToiletsList2() : Single<List<Toilet>>
 
+    @Query("SELECT * FROM Toilet WHERE favorite = 1")
+    fun getFavoritesList() : Single<List<Toilet>>
+
     @Query("SELECT * FROM Toilet WHERE id = :id")
     fun getToiletById(id: Int) : Toilet
 

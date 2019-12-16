@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="ovh.geoffrey_druelle.nantestoilettes.ui.toiletslist.ToiletsListViewModel" />
@@ -16,12 +17,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
+            toiletsList="@{vm.toilets}"
+            toiletsViewModel="@{vm}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/toilet_item"
-            toiletList="@{vm.toilets}"
-            toiletsViewModel="@{vm}"/>
+            tools:listitem="@layout/toilet_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

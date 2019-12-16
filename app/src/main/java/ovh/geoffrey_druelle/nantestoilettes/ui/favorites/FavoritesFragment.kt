@@ -1,19 +1,22 @@
 package ovh.geoffrey_druelle.nantestoilettes.ui.favorites
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.LayoutRes
+import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.support.v4.toast
-
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ovh.geoffrey_druelle.nantestoilettes.R
+import ovh.geoffrey_druelle.nantestoilettes.core.BaseFragment
+import ovh.geoffrey_druelle.nantestoilettes.databinding.FavoritesFragmentBinding
 import ovh.geoffrey_druelle.nantestoilettes.ui.MainActivity.Companion.instance
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : BaseFragment<FavoritesFragmentBinding>() {
 
     companion object {
         fun newInstance() = FavoritesFragment()
@@ -22,12 +25,22 @@ class FavoritesFragment : Fragment() {
     private var exit: Boolean = false
     private lateinit var viewModel: FavoritesViewModel
 
+    @LayoutRes
+    override fun getLayoutResId(): Int = R.layout.favorites_fragment
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
 
         instance.setFragment(this)
+        instance.supportActionBar?.show()
+        instance.bottom_nav.visibility = View.VISIBLE
+
+        viewModel = getViewModel()
+        binding.vm = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val onBackPressedCallback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
@@ -37,13 +50,7 @@ class FavoritesFragment : Fragment() {
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
-        return inflater.inflate(R.layout.favorites_fragment, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(FavoritesViewModel::class.java)
-        // TODO: Use the ViewModel
+        return binding.root
     }
 
     private fun quitApp() {

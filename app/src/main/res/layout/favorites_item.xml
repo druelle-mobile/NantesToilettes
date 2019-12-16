@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="ovh.geoffrey_druelle.nantestoilettes.ui.favorites.FavoritesViewModel" />
+
+        <variable
+            name="favoriteItem"
+            type="ovh.geoffrey_druelle.nantestoilettes.data.local.model.Toilet" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_4sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_4sdp">
+
+            <ImageButton
+                android:id="@+id/item_fav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/translucent"
+                android:background="@color/translucent"
+                android:src="@drawable/ic_star_border_grey_600_24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+            <!--            android:onClick="@{() -> vm.favItem(favoriteItem)}"-->
+
+            <TextView
+                android:id="@+id/item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/item_name,favoriteItem.name)}"
+                tools:text="Name : Procé Chateau"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/item_fav"
+                app:layout_constraintLeft_toRightOf="@id/item_fav"
+                app:layout_constraintBottom_toBottomOf="@id/item_fav"/>
+
+            <TextView
+                android:id="@+id/item_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/item_address,favoriteItem.address)}"
+                tools:text="Address : Parc de Procé - Château"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/guidelineMiddle"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineMiddle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5"/>
+
+            <TextView
+                android:id="@+id/item_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/item_city,favoriteItem.city)}"
+                tools:text="City : Nantes"
+                app:layout_constraintTop_toBottomOf="@+id/guidelineMiddle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/item_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/item_schedule,favoriteItem.schedule)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Schedule : NC" />
+
+            <TextView
+                android:id="@+id/item_pole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/item_pole,favoriteItem.pole)}"
+                tools:text="Pole : Nantes Ouest"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/item_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/item_type,favoriteItem.type)}"
+                tools:text="Type : Bâti"
+                app:layout_constraintTop_toBottomOf="@+id/item_pole"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/item_search_on_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/translucent"
+                android:src="@drawable/ic_my_location_black_36dp"
+                app:layout_constraintTop_toBottomOf="@id/item_type"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <ImageView
+                android:id="@+id/item_accessibility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_accessible_blue_600_36dp"
+                app:layout_constraintTop_toBottomOf="@id/item_type"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/item_search_on_map"
+                app:layout_constraintRight_toLeftOf="@id/item_search_on_map"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

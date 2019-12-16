@@ -31,8 +31,8 @@ Any rights in individual contents of the database are licensed under the Databas
     * Room
 * Retrofit & GSON
 * Koin
-
-* Mapbox
+* RxJAVA2 & RxAndroid
+* Mapbox & Mapbox Markerview
 * Material
 * Constraint Layouts
 * Anko
@@ -42,6 +42,8 @@ Any rights in individual contents of the database are licensed under the Databas
 * SSP
 * Timber
 * Stetho
+* EasyPermissions
+* SonarQube
 
 
 ## Author

@@ -48,7 +48,7 @@ class FavoritesViewModel : BaseViewModel(), CoroutineScope {
     }
 
     private fun loadFavoritesList() {
-        subscription = repo.getToiletsList()
+        subscription = repo.getFavoritesList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

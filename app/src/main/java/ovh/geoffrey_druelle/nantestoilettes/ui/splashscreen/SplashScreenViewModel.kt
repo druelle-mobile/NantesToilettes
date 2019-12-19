@@ -94,7 +94,8 @@ class SplashScreenViewModel(
             override fun onResponse(call: Call<General>, response: Response<General>) {
                 if (response.isSuccessful){
                     succeedRequestForHits()
-                    if (response.body()?.hits != localEntries) launchRequestForDatas()
+                    if (response.body()?.hits != localEntries)
+                        launchRequestForDatas()
                     else navToMap()
                 } else{
                     failedRequestForHits()
@@ -119,7 +120,6 @@ class SplashScreenViewModel(
                     val records: List<Record> = general.records
                     for (i in records.indices){
                         val fields: Fields = records[i].fields
-
                         val toilet = Toilet()
                         setValuesOfToilet(toilet, fields)
                     }

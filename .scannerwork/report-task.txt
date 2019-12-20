@@ -2,5 +2,5 @@ projectKey=ovh.geoffrey_druelle.nantestoilettes
 serverUrl=http://localhost:9000
 serverVersion=7.9.1.27448
 dashboardUrl=http://localhost:9000/dashboard?id=ovh.geoffrey_druelle.nantestoilettes
-ceTaskId=AW76F2rK1ZpPlAqlUW-P
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AW76F2rK1ZpPlAqlUW-P
+ceTaskId=AW8i8tV4pq9TpH3Ap8-A
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AW8i8tV4pq9TpH3Ap8-A

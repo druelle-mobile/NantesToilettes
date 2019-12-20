@@ -47,15 +47,29 @@ class FavoritesListAdapter(
         val toilet = toilets[position]
         holder.binding.favoriteItem = toilet
         holder.binding.vm = favoritesViewModel
-        holder.itemView.findViewById<ImageButton>(R.id.item_search_on_map).setOnClickListener {
+        holder.binding.itemSearchOnMap.setOnClickListener {
             locateOnMap(toilet)
         }
-
         holder.binding.itemFav.setOnClickListener {
             addOrRemoveFromFavorites(toilet, holder, position)
         }
 
         setFavoriteButtonIcon(toilet, holder, position)
+        setMobilityAccessIcon(toilet, holder, position)
+    }
+
+    private fun setMobilityAccessIcon(
+        toilet: Toilet,
+        holder: FavoritesListViewHolder,
+        position: Int
+    ) {
+        if (toilet.reduceMobility == "oui") {
+            holder.binding.itemAccessibility.visibility = View.VISIBLE
+        }
+        else {
+            holder.binding.itemAccessibility.visibility = View.GONE
+        }
+        MainActivity.instance.runOnUiThread { Runnable { this.notifyItemChanged(position) } }
     }
 
     private fun addOrRemoveFromFavorites(

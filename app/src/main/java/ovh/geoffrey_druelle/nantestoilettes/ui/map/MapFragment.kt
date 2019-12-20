@@ -19,11 +19,8 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.mapboxsdk.annotations.BubbleLayout
 import com.mapbox.mapboxsdk.geometry.LatLng
-import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions.*
-import com.mapbox.mapboxsdk.location.modes.CameraMode
 import com.mapbox.mapboxsdk.location.modes.CameraMode.*
-import com.mapbox.mapboxsdk.location.modes.RenderMode
 import com.mapbox.mapboxsdk.location.modes.RenderMode.*
 import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
@@ -281,37 +278,50 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback, OnMa
         decimalFormat.applyPattern("#.###")
         val featureList = featureCollection.features()
 
-        return if (selectedFeatures.isNotEmpty()) {
-            val name = selectedFeatures[0].getStringProperty(PROPERTY_NAME)
-            val selectedFeature : Point = selectedFeatures[0].geometry() as Point
-            val sfLat : Double = decimalFormat.format(selectedFeature.latitude()).toDouble()
-            val sfLng : Double = decimalFormat.format(selectedFeature.longitude()).toDouble()
-
-            if (featureList != null) {
-                for (i in featureList.indices) {
-                    if (featureList[i].getStringProperty(PROPERTY_NAME) == name) {
-                        val featurePoint : Point = featureList[i].geometry() as Point
-                        val fLat : Double = decimalFormat.format(featurePoint.latitude()).toDouble()
-                        val fLng : Double = decimalFormat.format(featurePoint.longitude()).toDouble()
-
-                        if (fLat == sfLat && fLng == sfLng){
-                            if (featureSelectStatus(i)) setFeatureSelectState(featureList[i], false)
-                            else setSelected(i)
-                        }
-                    }
-                }
+        return when {
+            selectedFeatures.isNotEmpty() -> {
+                isSelectedPointHasName(selectedFeatures, decimalFormat, featureList)
             }
-            true
-        } else {
-            if (featureList != null) {
-                for (i in featureList.indices) {
-                    if (featureList[i].getBooleanProperty(PROPERTY_SELECTED) == true) {
-                        setFeatureSelectState(featureList[i], false)
-                    }
-                }
+            else -> {
+                isAPointSelected(featureList)
             }
-            false
         }
+    }
+
+    private fun isSelectedPointHasName(
+        selectedFeatures: List<Feature>,
+        decimalFormat: DecimalFormat,
+        featureList: MutableList<Feature>?
+    ): Boolean {
+        val name = selectedFeatures[0].getStringProperty(PROPERTY_NAME)
+        val selectedFeature: Point = selectedFeatures[0].geometry() as Point
+        val sfLat: Double = decimalFormat.format(selectedFeature.latitude()).toDouble()
+        val sfLng: Double = decimalFormat.format(selectedFeature.longitude()).toDouble()
+
+        featureList?.indices?.forEach { i ->
+            if (featureList[i].getStringProperty(PROPERTY_NAME) == name) {
+                val featurePoint: Point = featureList[i].geometry() as Point
+                val fLat: Double = decimalFormat.format(featurePoint.latitude()).toDouble()
+                val fLng: Double = decimalFormat.format(featurePoint.longitude()).toDouble()
+
+                if (fLat == sfLat && fLng == sfLng) {
+                    when {
+                        featureSelectStatus(i) -> setFeatureSelectState(featureList[i], false)
+                        else -> setSelected(i)
+                    }
+                }
+            }
+        }
+        return true
+    }
+
+    private fun isAPointSelected(featureList: MutableList<Feature>?): Boolean {
+        featureList?.indices?.forEach { i ->
+            if (featureList[i].getBooleanProperty(PROPERTY_SELECTED) == true) {
+                setFeatureSelectState(featureList[i], false)
+            }
+        }
+        return false
     }
 
     private fun setSelected(index: Int) {

@@ -24,6 +24,10 @@ class AboutViewModel : BaseViewModel() {
         get() = _connected
 
     init {
+        testConnection()
+    }
+
+    private fun testConnection() {
         if (isConnectedToNetwork(appContext))
             _connected.postValue(true)
         else _connected.postValue(false)

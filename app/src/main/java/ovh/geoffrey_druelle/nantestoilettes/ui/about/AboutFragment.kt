@@ -2,10 +2,8 @@ package ovh.geoffrey_druelle.nantestoilettes.ui.about
 
 import android.content.Intent
 import android.net.Uri
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +16,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import ovh.geoffrey_druelle.nantestoilettes.NantesToilettesApp.Companion.appContext
-
 import ovh.geoffrey_druelle.nantestoilettes.R
 import ovh.geoffrey_druelle.nantestoilettes.core.BaseFragment
 import ovh.geoffrey_druelle.nantestoilettes.databinding.AboutFragmentBinding
@@ -36,6 +32,8 @@ class AboutFragment : BaseFragment<AboutFragmentBinding>() {
 
     private var exit: Boolean = false
     private lateinit var viewModel: AboutViewModel
+    private lateinit var uritrottoirImageView: ImageView
+    private lateinit var nantesImageView: ImageView
 
     @LayoutRes
     override fun getLayoutResId(): Int = R.layout.about_fragment
@@ -53,13 +51,10 @@ class AboutFragment : BaseFragment<AboutFragmentBinding>() {
         viewModel = getViewModel()
         binding.vm = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        val root = binding.root
 
-        viewModel.buttonClicked.observe(viewLifecycleOwner, Observer { buttonClicked ->
-            if (buttonClicked){
-                navigateToWebsite()
-                viewModel.hasNavigatedToWebsite()
-            }
-        })
+        initImages(root)
+        initObservers()
 
         MainActivity.instance.setFragment(this)
 
@@ -71,7 +66,31 @@ class AboutFragment : BaseFragment<AboutFragmentBinding>() {
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
-        return binding.root
+        return root
+    }
+
+    private fun initObservers() {
+        viewModel.buttonClicked.observe(viewLifecycleOwner, Observer { buttonClicked ->
+            if (buttonClicked) {
+                navigateToWebsite()
+                viewModel.hasNavigatedToWebsite()
+            }
+        })
+
+        viewModel.connected.observe(this, Observer { connected ->
+            if (connected) {
+                Picasso.get().load(URITROITTOIR_IMG).into(uritrottoirImageView)
+                Picasso.get().load(NANTES_LOGO).into(nantesImageView)
+            } else {
+                uritrottoirImageView.setImageResource(R.drawable.ic_signal_wifi_off_black_48dp)
+                nantesImageView.setImageResource(R.drawable.ic_signal_wifi_off_black_48dp)
+            }
+        })
+    }
+
+    private fun initImages(root: View) {
+        uritrottoirImageView = root.findViewById(R.id.uritrottoir)
+        nantesImageView = root.findViewById(R.id.nantes)
     }
 
     private fun quitApp() {
@@ -80,19 +99,6 @@ class AboutFragment : BaseFragment<AboutFragmentBinding>() {
             toast("Press Back again to exit.")
             exit = true
             Handler().postDelayed({ exit = false }, 3000)
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val uritrottoirImageView = view.findViewById<ImageView>(R.id.uritrottoir)
-        val nantesImageView = view.findViewById<ImageView>(R.id.nantes)
-        if (viewModel.connected.value == true){
-            Picasso.get().load(URITROITTOIR_IMG).into(uritrottoirImageView)
-            Picasso.get().load(NANTES_LOGO).into(nantesImageView)
-        } else {
-            uritrottoirImageView.setImageResource(R.drawable.ic_signal_wifi_off_black_48dp)
-            nantesImageView.setImageResource(R.drawable.ic_signal_wifi_off_black_48dp)
         }
     }
 

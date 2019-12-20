@@ -107,7 +107,6 @@ class SplashScreenFragment : BaseFragment<SplashScreenFragmentBinding>() {
     }
 
     private fun navigateToMap() {
-//        val action = R.id.action_splashScreenFragment_to_mapFragment
         val action = R.id.action_splashScreenFragment_to_mapFragment
         viewModel.navigatedToMap()
         viewModel.alreadyFinishedAnimation()

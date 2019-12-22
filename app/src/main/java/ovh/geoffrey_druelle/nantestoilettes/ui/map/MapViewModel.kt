@@ -1,5 +1,6 @@
 package ovh.geoffrey_druelle.nantestoilettes.ui.map
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mapbox.geojson.Feature
@@ -8,10 +9,7 @@ import com.mapbox.geojson.Point
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import ovh.geoffrey_druelle.nantestoilettes.NantesToilettesApp.Companion.instance
 import ovh.geoffrey_druelle.nantestoilettes.core.BaseViewModel
 import ovh.geoffrey_druelle.nantestoilettes.data.local.model.Toilet
@@ -44,7 +42,7 @@ class MapViewModel : BaseViewModel(), CoroutineScope {
         getToiletsGeoCoords()
     }
 
-    internal fun getToiletsGeoCoords() {
+    private fun getToiletsGeoCoords() {
         lateinit var list: List<Toilet>
 
         subscription = repo.getToiletsList()
@@ -53,12 +51,12 @@ class MapViewModel : BaseViewModel(), CoroutineScope {
             .subscribe({
                 _toiletsList.postValue(it)
                 list = it
-                for (i in list.indices){
+                for (i in list.indices) {
                     val lat = list[i].latitude
                     val long = list[i].longitude
                     val name = list[i].name
-                    val feature: Feature = Feature.fromGeometry(Point.fromLngLat(long,lat))
-                    feature.addStringProperty("name",name)
+                    val feature: Feature = Feature.fromGeometry(Point.fromLngLat(long, lat))
+                    feature.addStringProperty("name", name)
                     features[i] = feature
                 }
                 _geoGSONList = FeatureCollection.fromFeatures(features)

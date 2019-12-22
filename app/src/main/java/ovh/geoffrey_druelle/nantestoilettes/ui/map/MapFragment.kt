@@ -14,10 +14,13 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
 import androidx.core.content.res.ResourcesCompat.getDrawable
+import androidx.lifecycle.Observer
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.mapboxsdk.annotations.BubbleLayout
+import com.mapbox.mapboxsdk.camera.CameraPosition
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions.*
 import com.mapbox.mapboxsdk.location.modes.CameraMode.*
@@ -39,6 +42,7 @@ import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import ovh.geoffrey_druelle.nantestoilettes.R
 import ovh.geoffrey_druelle.nantestoilettes.core.BaseFragment
+import ovh.geoffrey_druelle.nantestoilettes.data.local.model.Toilet
 import ovh.geoffrey_druelle.nantestoilettes.databinding.MapFragmentBinding
 import ovh.geoffrey_druelle.nantestoilettes.ui.MainActivity.Companion.instance
 import java.text.DecimalFormat
@@ -95,14 +99,10 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback, OnMa
 
         val root = binding.root
 
-        drawable = getDrawable(resources, R.drawable.ic_location_on_red_600_24dp, null)!!
-        bitmap = getBitmapFromDrawable(drawable)!!
         initMapView(root, savedInstanceState)
 
         val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                quitApp()
-            }
+            override fun handleOnBackPressed() { quitApp() }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
@@ -119,6 +119,9 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback, OnMa
     }
 
     private fun initMapView(root: View, savedInstanceState: Bundle?) {
+        drawable = getDrawable(resources, R.drawable.ic_location_on_red_600_24dp, null)!!
+        bitmap = getBitmapFromDrawable(drawable)!!
+
         mapView = root.findViewById(R.id.map_view)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
@@ -137,6 +140,9 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback, OnMa
 
             mapboxMap.addOnMapClickListener(this@MapFragment)
         }
+
+        if (arguments != null && arguments!!.containsKey("toilet_lat") && arguments!!.containsKey("toilet_lng") )
+            locateToiletOnMap(arguments!!.get("toilet_lat") as Double, arguments!!.get("toilet_lng") as Double)
     }
 
     private suspend fun loadDatas(): FeatureCollection {
@@ -348,6 +354,16 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback, OnMa
 
     private fun refreshSource() {
         source.setGeoJson(featureCollection)
+    }
+
+
+    private fun locateToiletOnMap(lat: Double, lng: Double) {
+        val position: CameraPosition = CameraPosition.Builder()
+            .target(LatLng(lat,lng))
+            .zoom(14.0)
+            .tilt(20.0)
+            .build()
+        mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position),500)
     }
 
     override fun onStart() {

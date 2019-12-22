@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private lateinit var fragment: Fragment
+    internal lateinit var fragment: Fragment
     fun setFragment(fragment: Fragment) {
         this.fragment = fragment
     }

@@ -114,6 +114,7 @@ dependencies {
     implementation "com.mapbox.mapboxsdk:mapbox-android-sdk:$MAPBOX_SDK"
     implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v8:$MAPBOX_ANNOTATION"
     implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-markerview-v8:$MAPBOX_MARKERVIEW"
+    implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-places-v8:$MAPBOX_PLACES"
 
     // EasyPermissions
     implementation "pub.devrel:easypermissions:$EASY_PERMISSIONS"

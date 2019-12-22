@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
 import ovh.geoffrey_druelle.nantestoilettes.NantesToilettesApp
@@ -102,7 +103,7 @@ class FavoritesListAdapter(
     }
 
     private fun locateOnMap(toilet: Toilet) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        FavoritesFragment.navigateToMap(toilet)
     }
 
     inner class FavoritesListViewHolder(view: View) : RecyclerView.ViewHolder(view) {

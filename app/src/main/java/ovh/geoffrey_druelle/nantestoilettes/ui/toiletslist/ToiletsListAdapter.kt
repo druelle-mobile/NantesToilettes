@@ -106,7 +106,7 @@ class ToiletsListAdapter(
     }
 
     private fun locateOnMap(toilet: Toilet) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        ToiletsListFragment.navigateToMap(toilet)
     }
 
     inner class ToiletsListViewHolder(view: View) : RecyclerView.ViewHolder(view) {

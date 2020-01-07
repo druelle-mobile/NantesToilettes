@@ -32,7 +32,6 @@ class FavoritesFragment : BaseFragment<FavoritesFragmentBinding>() {
         }
     }
 
-    private var exit: Boolean = false
     private lateinit var viewModel: FavoritesViewModel
 
     @LayoutRes
@@ -52,24 +51,6 @@ class FavoritesFragment : BaseFragment<FavoritesFragmentBinding>() {
         binding.vm = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val onBackPressedCallback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    quitApp()
-                }
-            }
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-
         return binding.root
     }
-
-    private fun quitApp() {
-        if (exit) instance.finish()
-        else {
-            toast("Press Back again to exit.")
-            exit = true
-            Handler().postDelayed({exit = false}, 3000)
-        }
-    }
-
 }

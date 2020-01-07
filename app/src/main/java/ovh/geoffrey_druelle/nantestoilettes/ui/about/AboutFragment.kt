@@ -30,7 +30,6 @@ class AboutFragment : BaseFragment<AboutFragmentBinding>() {
         fun newInstance() = AboutFragment()
     }
 
-    private var exit: Boolean = false
     private lateinit var viewModel: AboutViewModel
     private lateinit var uritrottoirImageView: ImageView
     private lateinit var nantesImageView: ImageView
@@ -58,14 +57,6 @@ class AboutFragment : BaseFragment<AboutFragmentBinding>() {
 
         MainActivity.instance.setFragment(this)
 
-        val onBackPressedCallback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    quitApp()
-                }
-            }
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-
         return root
     }
 
@@ -91,15 +82,6 @@ class AboutFragment : BaseFragment<AboutFragmentBinding>() {
     private fun initImages(root: View) {
         uritrottoirImageView = root.findViewById(R.id.uritrottoir)
         nantesImageView = root.findViewById(R.id.nantes)
-    }
-
-    private fun quitApp() {
-        if (exit) MainActivity.instance.finish()
-        else {
-            toast("Press Back again to exit.")
-            exit = true
-            Handler().postDelayed({ exit = false }, 3000)
-        }
     }
 
     private fun navigateToWebsite(){

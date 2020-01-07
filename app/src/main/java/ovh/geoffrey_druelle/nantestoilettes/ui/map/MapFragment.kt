@@ -62,7 +62,6 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback, OnMa
 
     }
 
-    private var exit: Boolean = false
     private lateinit var viewModel: MapViewModel
     private lateinit var mapView: MapView
     private lateinit var mapboxMap: MapboxMap
@@ -101,21 +100,7 @@ class MapFragment : BaseFragment<MapFragmentBinding>(), OnMapReadyCallback, OnMa
 
         initMapView(root, savedInstanceState)
 
-        val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() { quitApp() }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-
         return root
-    }
-
-    private fun quitApp() {
-        if (exit) instance.finish()
-        else {
-            toast("Press Back again to exit.")
-            exit = true
-            Handler().postDelayed({ exit = false }, 3000)
-        }
     }
 
     private fun initMapView(root: View, savedInstanceState: Bundle?) {
